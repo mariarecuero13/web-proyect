@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<h1>JOiTRAVEL</h1>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class="container-header">
+  <script>
+    (function(window) {
+        'use strict';
+        var MBL = null;
+        var MenuBeforeLoad = function(args) {
+            this.btnMenu = args.btnMenu;
+            this.menuUrl = args.menuUrl;
+            this.menuDiv = null;
+            this.menuHeight = null;
+            window.statusMenu = null;
+            this.addEvent(this.btnMenu, "click", menuDeploy);
+        };
+        MenuBeforeLoad.prototype = {
+            _openMenu: function() {
+                window.statusMenu = 'open';
+                this.btnMenu.classList.add('active');
+                this.menuDiv.style.opacity = 1;
+                this.menuDiv.style.height = this.menuHeight + "px";
+                this.addEvent(window, "scroll", closeMenuHandler);
+            },
+            _closeMenu: function() {
+                window.statusMenu = 'close';
+                this.btnMenu.classList.remove('active');
+                this.menuDiv.style.height = "0px";
+                this.delEvent(window, "scroll", closeMenuHandler);
+            },
+            _menuDeploy: function() {
+                if (this.btnMenu.hasAttribute('data-loaded')) {
+                    window.statusMenu !== 'open' ? this._openMenu() : this._closeMenu();
+                } else {
+                    var content = document.createElement("div");
+                    var q = this._getRemoteHtml();
+                    this.btnMenu.setAttribute('data-loaded', true);
+                    q.onreadystatechange = function() {
+                        if (q.readyState == 4 && q.status == 200) {
+                            content.innerHTML = q.responseText;
+                            this.menuDiv = content.children[0];
+                            this.btnMenu.parentNode.parentNode.appendChild(this.menuDiv);
+                            this.menuHeight = parseInt(this.menuDiv.offsetHeight);
+                            this._addStylesAndBehaviorToMenuDiv();
+                            this._openMenu();
+                        }
+                    }.bind(this);
+                }
+            },
+            _addStylesAndBehaviorToMenuDiv: function() {
+                this.menuDiv.style.transition = "all 0.2s";
+                //this.menuDiv.style.opacity = 0;
+                this.menuDiv.style.height = "0px";
+                this.menuDiv.style.overflow = 'hidden';
+                this.menuDiv.classList.contains("no-visible") && this.menuDiv.classList.remove('no-visible');
+                this.addEvent(this.menuDiv, "transitionend", endTrasitionHandler);
+            },
+            _getRemoteHtml: function() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('GET', this.menuUrl, true);
+                xhttp.send();
+                return xhttp;
+            },
+            addEvent : function(element, event, fnc) {
+                return element.attachEvent ? element.attachEvent('on' + event, fnc) : element.addEventListener(event, fnc, false);
+            },
+            delEvent : function(element, event, fnc) {
+                return element.detachEvent ? element.detachEvent('on' + event, fnc) : element.removeEventListener(event, fnc, false);
+            }
+        };
+        function init() {
+            var btnMenu = document.getElementsByClassName("js-supermenu-portada")[0];
+            var menuUrl = btnMenu.getAttribute('data-menu-section-path-click');
+            MBL = new MenuBeforeLoad({btnMenu: btnMenu, menuUrl: menuUrl});
+            return MBL;
+        }
+        function menuDeploy(e) {
+            e.preventDefault();
+            MBL._menuDeploy();
+        }
+        function endTrasitionHandler() {
+            if (MBL.menuDiv.style.height == "0px") {
+                MBL.menuDiv.style.opacity = 0;
+            }
+        }
+        function closeMenuHandler() {
+            if (/(open)/.test(window.statusMenu)) {
+                MBL._closeMenu();
+            }
+        }
+        function destroyMenuHandler() {
+            window.statusMenu = 'close';
+            MBL.menuDiv.style.display = 'none';
+            MBL.btnMenu.classList.remove('active');
+            MBL.delEvent(window, "scroll", destroyMenuHandler);
+        }
+        window["delMBL"] = function() {
+            MBL.delEvent(MBL.btnMenu, 'click', menuDeploy);
+            if (window.statusMenu) {
+                MBL.delEvent(window, "scroll", closeMenuHandler);
+                MBL.addEvent(window, "scroll", destroyMenuHandler);
+                MBL.delEvent(MBL.menuDiv, 'transitionend', endTrasitionHandler);
+                MBL.menuDiv.removeAttribute('style');
+                if (window.statusMenu=='close') {
+                    MBL.menuDiv.style.display = 'none';
+                }
+            }
+            delete window["_MBL_"];
+        };
+        window["_MBL_"] = init;
+    }(window));
+</script>
+  <nav role="navigation" class="js-navTab">
+    <ul class="nav-tabs js-mainNavigation">
+
+      <li class="tab tab-espana" data-section="espana">
+        <a href="http://www.elmundo.es/espana.html?intcmp=MENUHOM24801&amp;s_kw=espana" data-menu-active="espana">España</a>
+        <div class="tab-container" id="submenuEspana">
+          <ul class="tab-content">
+            <li class="tab-list">
+              <a href="http://www.elmundo.es/espana.html?intcmp=MENUDES22301&amp;s_kw=espana" class="tab-list-header">Sitios que visitar</a></li>
+              <li class="tab-list">
+                <a href="http://www.elmundo.es/madrid.html?intcmp=MENUDES22301&amp;s_kw=madrid" class="tab-list-header">Otros</a></li>
+              </ul>
+            </div>
+          </li>
+
+      <li class="tab tab-italia" data-section="italia">
+        <a href="http://www.elmundo.es/opinion.html?intcmp=MENUHOM24801&amp;s_kw=opinion" data-menu-active="italia">Italia</a>
+        <div class="tab-container" id="submenuItalia">
+          <ul class="tab-content">
+            <li class="tab-list">
+              <a href="http://www.elmundo.es/opinion.html?intcmp=MENUDES22301&amp;s_kw=opinion" class="tab-list-header">Sitios que visitar</a></li>
+              <li class="tab-list">
+                <a href="http://www.elmundo.es/opinion/editorial.html?intcmp=MENUDES22301&amp;s_kw=editorial" class="tab-list-header">Otros</a></li>
+              </ul>
+            </div>
+          </li>
+
+      <li class="tab tab-inglaterra" data-section="inglaterra">
+        <a href="http://www.elmundo.es/economia.html?intcmp=MENUHOM24801&amp;s_kw=economia" data-menu-active="inglaterra">Inglaterra</a>
+        <div class="tab-container" id="submenuInglaterra">
+          <ul class="tab-content">
+            <li class="tab-list">
+              <a href="http://www.elmundo.es/economia.html?intcmp=MENUDES22301&amp;s_kw=economia" class="tab-list-header">Sitios que visitar</a></li>
+              <li class="tab-list">
+                <a href="http://www.elmundo.es/economia/macroeconomia.html?intcmp=MENUDES22301&amp;s_kw=macroeconomia" class="tab-list-header">Otros</a></li>
+              </ul>
+            </div>
+          </li>
+
+      <li class="tab tab-alemania" data-section="alemania">
+        <a href="http://www.elmundo.es/internacional.html?intcmp=MENUHOM24801&amp;s_kw=internacional" data-menu-active="alemania">Alemania</a>
+        <div class="tab-container" id="submenuAlemania">
+          <ul class="tab-content">
+            <li class="tab-list">
+              <a href="http://www.elmundo.es/internacional.html?intcmp=MENUDES22301&amp;s_kw=internacional" class="tab-list-header">Sitios que visitar</a></li>
+              <li class="tab-list">
+                <a href="http://www.elmundo.es/internacional/america.html?intcmp=MENUDES22301&amp;s_kw=america" class="tab-list-header">Otros</a></li>
+              </ul>
+            </div>
+          </li>
+
+      <li class="tab tab-bulgaria" data-section="bulgaria">
+        <a href="http://www.elmundo.es/deportes.html?intcmp=MENUHOM24801&amp;s_kw=deportes" data-menu-active="bulgaria">Bulgaria</a>
+        <div class="tab-container" id="submenuBulgaria">
+          <ul class="tab-content">
+            <li class="tab-list">
+              <a href="http://www.elmundo.es/deportes.html?intcmp=MENUDES22301&amp;s_kw=deportes" class="tab-list-header">Sitios que visitar</a></li>
+              <li class="tab-list">
+                <a href="http://www.elmundo.es/deportes/futbol.html?intcmp=MENUDES22301&amp;s_kw=futbol" class="tab-list-header">Otros</a></li>
+              </ul>
+            </div>
+          </li>
+
+      <li class="tab tab-turquia" data-section="turquia">
+        <a href="http://www.elmundo.es/cultura.html?intcmp=MENUHOM24801&amp;s_kw=cultura" data-menu-active="turquia">Turqía</a>
+        <div class="tab-container" id="submenuTurquia">
+          <ul class="tab-content">
+            <li class="tab-list">
+              <a href="http://www.elmundo.es/cultura.html?intcmp=MENUDES22301&amp;s_kw=cultura" class="tab-list-header">Sitios que visitar</a></li>
+              <li class="tab-list">
+                <a href="http://www.elmundo.es/cultura/cine.html?intcmp=MENUDES22301&amp;s_kw=cine" class="tab-list-header">Otros</a></li>
+              </ul>
+            </div>
+          </li>
+        </nav>
+</div>
