@@ -1,0 +1,74 @@
+
+body {
+  background-image: url("espf.jpg");
+}
+h1 {
+  text-align: center;
+}
+h1 p1 {
+  font-size: 100px;
+  font-family: Hervetica;
+  color: white;
+}
+h1 p {
+  font-size: 25px;
+  font-family: system;
+  color: white;
+}
+h2 {
+  font-size: 70px;
+  font-family: calibri;
+  color: white;
+  margin-left: 70px;
+}
+h2 table {
+  font-size: 25px;
+  font-family: calibri;
+  color: black;
+  margin-left: 40px;
+
+}
+h2 table tr th img {
+  height: 300px;
+  width: 400px;
+  border-radius: 50%;
+}
+table tr th {
+  padding: 60px;
+}
+#op {
+  background-color: rgba(164, 225, 249,0.5)
+}
+h3 table th{
+  font-family: calibri;
+  color: blue;
+  font-size: 50PX;
+  margin-left: 70px;
+}
+h3 img{
+  height: 80px;
+  width: 200px;
+}
+h4 img {
+  height: 250px;
+  width: 350px;
+  border-radius: 50%;
+}
+a:link {
+  text-decoration-color: WHITE;
+  text-decoration: none;
+}
+.caption {
+  font-size: 30px;
+  color: white;
+}
+
+a:visited {
+  color: LIGHTBLUE;
+}
+a:hover {
+  color: YELLOW;
+}
+p table tr th {
+  padding: 30px;
+}

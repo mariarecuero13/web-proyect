@@ -1,0 +1,71 @@
+
+body {
+  background-image: url("itf.jpg");
+  }
+  h1 {
+    text-align: center;
+  }
+  h1 p1 {
+    font-size: 100px;
+    font-family: Hervetica;
+    color: white;
+  }
+  h1 p {
+    font-size: 25px;
+    font-family: system;
+    color: white;
+  }
+  h2 {
+    font-size: 70px;
+    font-family: calibri;
+    color: white;
+    margin-left: 70px;
+  }
+h2 table {
+  font-size: 22px;
+  font-family: calibri;
+  color: black;
+  margin-left: 30px;
+
+}
+h3 p1 table th{
+  font-size: 50px;
+  color: rgb(255, 222, 104);
+}
+table tr th {
+  padding: 40px;
+}
+#op {
+  background-color: rgba(255, 222, 104, 0.8)
+}
+.google img {
+  height: 80px;
+  width: 210px;
+
+}
+p table tr th img {
+  height: 300px;
+  width: 400px;
+  border-radius: 50%;
+}
+h3 {
+  font-family: calibri;
+  color: wHITE;
+  font-size: 40PX;
+  margin-left: 70px;
+}
+a:link {
+  font-size: 40px;
+  text-decoration-color: WHITE;
+    text-decoration: none;
+}
+
+a:visited {
+    color: WHITE;
+}
+a:hover {
+    color: YELLOW;
+}
+p table tr th {
+  padding: 30px;
+}

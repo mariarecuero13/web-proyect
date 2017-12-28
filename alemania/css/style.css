@@ -1,0 +1,44 @@
+body {
+  background-image: url("fondo.jpg");
+  background-repeat: repeat;
+    background-position: right top;
+}
+
+h1 {
+  font-size: 100px;
+  font-family: Hervetica;
+  color: black;
+  text-align: center;
+}
+h2 {
+  text-shadow: 2px 5px black;
+  font-size: 70px;
+  font-family: calibri;
+  color: white;
+  font-weight: bold;
+  margin-left: 70px;
+}
+
+.intro{
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 25px;
+  padding: 100px;
+}
+
+.bandera {
+  width: 70%;
+  height: 30%;
+  margin-left: 15px;
+  margin-right: 70px;
+    border-radius: 50%;
+}
+
+.row {
+  padding: 50px;
+  align: center;
+}
+
+.caption {
+  align: center;
+}
